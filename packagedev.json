@@ -1,9 +1,9 @@
 {
-  "name": "ngx-your-library",
+  "name": "ngx-magicsearch",
   "version": "0.0.0",
-  "description": "Your library description.",
+  "description": "Magic Search/Faceted Search Library for Angular 2.",
   "repository": {
-    "url": "https://github.com/preboot/angular-library-seed"
+    "url": "https://github.com/umens/ngx-magicsearch"
   },
   "license": "MIT",
   "scripts": {

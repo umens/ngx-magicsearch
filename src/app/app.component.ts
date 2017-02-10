@@ -11,7 +11,7 @@ import '../style/app.scss';
 })
 export class AppComponent {
   pipeTest: string = 'Create an amazing community by contributing a library';
-  url: string = 'https://github.com/preboot/angular-library-seed';
+  url: string = 'https://github.com/umens/ngx-magicsearch';
 
   constructor(public sampleService: SampleService) {
     // Do something with sampleService

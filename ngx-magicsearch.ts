@@ -25,12 +25,12 @@ export * from './src/app/services/sample.service';
     SamplePipe
   ]
 })
-export class YourLibModule {
+export class NgxMagicsearchbModule {
 
   /* optional: in case you need users to override your providers */
   static forRoot(configuredProviders: Array<any>): ModuleWithProviders {
     return {
-      ngModule: YourLibModule,
+      ngModule: NgxMagicsearchbModule,
       providers: configuredProviders
     };
   }

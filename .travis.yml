@@ -24,6 +24,5 @@ before_script:
 - npm install
 - npm run pretest
 - npm run build
-- npm run test
 
-script: karma start config/karma.conf.js --single-run
+script: karma start --single-run

@@ -183,3 +183,10 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/visualstudiocode,sublimetext,node,composer,linux,macos,osx,windows,git
+
+## lib specific
+
+ngx-magicsearch.js*
+ngx-magicsearch.d.ts
+src/**/*.js*
+src/**/*.d.ts

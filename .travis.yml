@@ -5,6 +5,11 @@ node_js:
   - "7.0"
   - "6.0"
 
+branches:
+  only:
+  - master
+  - develop
+
 addons:
 apt:
   sources:

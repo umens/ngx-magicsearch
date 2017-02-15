@@ -2,7 +2,7 @@
 
 **Please follow these basic steps to simplify pull request reviews - if you don't you'll probably just be asked to anyway.**
 
-* Please rebase your branch against the current master
+* Please rebase your branch against the current develop
 * Please ensure that the test suite passes **and** that code is lint free before submitting a PR by running:
  * ```npm test```
 * If you've added new functionality, **please** include tests which validate its behaviour

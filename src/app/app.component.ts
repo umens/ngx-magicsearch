@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import {SampleService} from './services/sample.service';
-
 import '../style/app.scss';
 
 @Component({
@@ -13,7 +11,7 @@ export class AppComponent {
   pipeTest: string = 'Create an amazing community by contributing a library';
   url: string = 'https://github.com/umens/ngx-magicsearch';
 
-  constructor(public sampleService: SampleService) {
+  constructor() {
     // Do something with sampleService
   }
 }

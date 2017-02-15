@@ -5,8 +5,8 @@ import {Component} from '@angular/core';
   template: `
   <div class="sample">{{sample}}</div>
   `,
-  styles: ['./sample.component.scss']
+  styles: ['./ngx-magic-search.component.scss']
 })
-export class SampleComponent {
+export class NgxMagicSearchComponent {
   public sample: string = 'Make an Angular Library. Go ahead. Make one :)';
 }

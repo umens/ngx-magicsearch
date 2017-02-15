@@ -106,8 +106,8 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "directive-selector-prefix": [true, "my"],
+    "directive-selector-prefix": [true, "ngx"],
     "component-selector-prefix": [true, "my"],
-    "pipe-naming": [true, "camelCase", "my"]
+    "pipe-naming": [true, "camelCase", "ngx"]
   }
 }

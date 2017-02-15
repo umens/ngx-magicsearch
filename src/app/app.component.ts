@@ -8,7 +8,6 @@ import '../style/app.scss';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  pipeTest: string = 'Create an amazing community by contributing a library';
   url: string = 'https://github.com/umens/ngx-magicsearch';
 
   constructor() {

@@ -6,7 +6,7 @@
   "typings": "ngx-magicsearch.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umens/ngx-magicsearch.git"
+    "url": "https://github.com/umens/ngx-magicsearch.git"
   },
   "keywords": [
     "angular",

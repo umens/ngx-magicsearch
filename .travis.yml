@@ -24,9 +24,9 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-- npm install -g angular-cli
-- npm install -g karma
-- npm run pretest
-- npm run build
+  - npm install -g angular-cli
+  - npm install -g karma
+  - npm run pretest
+  - npm run build
 
 script: npm run test

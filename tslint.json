@@ -107,7 +107,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "directive-selector-prefix": [true, "ngx"],
-    "component-selector-prefix": [true, "my"],
+    "component-selector-prefix": [true, "ngx"],
     "pipe-naming": [true, "camelCase", "ngx"]
   }
 }

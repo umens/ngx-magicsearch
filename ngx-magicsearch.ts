@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
-import { NgxMagicSearchDirective } from './src/app/directives/ngx-magic-search.directive';
+import { NgxMagicSearchComponent } from './src/app/components/ngx-magic-search.component';
 
 // for manual imports
-export * from './src/app/directives/ngx-magic-search.directive';
+export * from './src/app/components/ngx-magic-search.component';
 
 @NgModule({
   declarations: [
-    NgxMagicSearchDirective,
+    NgxMagicSearchComponent,
   ],
   providers: [
   ],
   exports: [
-    NgxMagicSearchDirective,
+    NgxMagicSearchComponent,
   ]
 })
 export class NgxMagicSearchBarModule {

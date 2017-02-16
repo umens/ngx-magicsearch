@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import { NgxMagicSearchComponent } from './components/ngx-magic-search.component';
 import { NgxMagicSearchDirective } from './directives/ngx-magic-search.directive';
 
 describe('App', () => {
@@ -9,6 +10,7 @@ describe('App', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        NgxMagicSearchComponent,
         NgxMagicSearchDirective
       ],
       providers: []

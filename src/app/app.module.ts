@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { NgxMagicSearchComponent } from './components/ngx-magic-search.component';
 import { NgxMagicSearchDirective } from './directives/ngx-magic-search.directive';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
@@ -16,7 +17,8 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
   ],
   declarations: [
     AppComponent,
-    NgxMagicSearchDirective,
+    NgxMagicSearchComponent,
+    NgxMagicSearchDirective
   ],
   providers: [
   ],

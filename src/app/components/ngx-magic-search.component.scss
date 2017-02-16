@@ -1,0 +1,194 @@
+/* Copyright 2014-2015 Eucalyptus Systems, Inc. */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+.ngx-dropdown-menu {
+  /* position: absolute; */
+  /* top: 100%; */
+  /* left: 0; */
+  z-index: 1000;
+  /* display: none; */
+  /* float: left; */
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  /* border: 1px solid #ccc; */
+  /* border: 1px solid rgba(0,0,0,.15); */
+  border-radius: 3px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid white;
+  margin-left: 5px;
+}
+
+.ngx-dropdown-menu>li>a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ngx-label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+
+/*-----------------------------------------
+   Colors
+  ----------------------------------------- */
+
+$bordercolor: #ccc;
+$iconcolor: #6a737b;
+$textcolor: #444;
+$background: white;
+$itembackground: #e6e7e8;
+
+/*-----------------------------------------
+   Item list
+  ----------------------------------------- */
+
+@mixin item-list {
+  .item-list {
+    position: relative;
+    /*display: inline-block;*/
+    /*height: 20px;*/
+    margin-top: 6px;
+    float: left;
+    .item {
+      color: #333;
+      background-color: $itembackground;
+      /* height: 30px; */
+      margin-right: 0.5rem;
+      display: inline-block;
+      padding: 4px;
+      /* font-size: 12px; */
+      /* margin-top: 8px; */
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
+@-moz-document url-prefix() {
+  .item-list {
+    .item {
+      top: -0.40rem;
+    }
+  }
+  .search-selected {
+    top: -0.40rem;
+  }
+}
+
+
+/*-----------------------------------------
+   Magic Search bar
+  ----------------------------------------- */
+
+.search-bar {
+  font-size: 14px;
+  position: relative;
+  border: 1px solid $bordercolor;
+  background-color: $background;
+  /* padding: 0.5rem; */
+  height: auto;
+  i.fa-filter {
+    color: $iconcolor;
+    position: absolute;
+    top: 0.75rem;
+    left: 0.65rem;
+    font-size: 18px;
+  }
+  .search-main-area {
+    position: relative;
+    margin-left: 2.75rem;
+    margin-right: 2.75rem;
+    cursor: text;
+    text-align: left;
+  }
+  @include item-list;
+  //.item-list {
+  //    margin-bottom: 0.125rem;
+  //}
+  .search-selected {
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: $background;
+    color: $textcolor;
+  }
+  .search-entry {
+    width: 18.5rem;
+    /* height: 30px; */
+    /* position: relative; */
+    /* float: right; */
+    /* margin-bottom: 8px;*/
+  }
+  .search-input {
+    width: 100%;
+    border: 0;
+    box-shadow: none;
+    /* margin-bottom: 0; */
+    margin: 6px 0;
+    background-color: $background;
+    color: $textcolor;
+    &:focus {
+      box-shadow: none;
+      background-color: $background;
+    }
+  }
+  .match {
+    font-weight: bold;
+  }
+  i.cancel {
+    color: $iconcolor;
+    &:hover {
+      color: darkred;
+    }
+    position: absolute;
+    top: 0.75rem;
+    right: 0.65rem;
+    font-size: 18px;
+  }
+}

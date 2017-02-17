@@ -1,0 +1,46 @@
+<div class="magic-search">
+  <div class="search-bar">
+    <i class="fa fa-filter go"></i>
+    <div class="search-main-area" (click)="enableTextEntry()">
+      <span class="item-list" *ngIf="currentSearch">
+        <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item">
+          <span>{{ facet.label[0] }}:<b>{{ facet.label[1] }}</b></span>
+      <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
+      </span>
+      </span>
+      <span class="search-selected ngx-label" *ngIf="facetSelected">
+        {{ facetSelected.label[0] }}:
+      </span>
+      <!-- For bootstrap, the dropdown attribute is moved from input up to div. -->
+      <div [ngClass]="{'search-entry': true, 'dropdown': true, 'active': isMenuOpen}">
+        <input class="search-input" type="text" placeholder="{{ strings.prompt }}" autocomplete="off" (keyup)="handleKeyUp($event)" (keydown)="handleKeyDown($event)" (keypress)="handleKeyPress($event)" [(ngModel)]="searchInput" [ngxFocus]="setFocusedEventEmitter">
+        <div class="dropdown-content" *ngIf="filteredObj.length > 0">
+          <div class="arrow-up"></div>
+          <ul class="ngx-dropdown-menu">
+            <template [ngIf]="!facetSelected">
+              <li *ngFor="let facet of filteredObj; let i = index;">
+                <a (click)="facetClicked(i, facet.name)" *ngIf="!isMatchLabel(facet.label)">{{ facet.label }}</a>
+                <a (click)="facetClicked(i, facet.name)" *ngIf="isMatchLabel(facet.label)">
+                  {{ facet.label[0] }}<span class="match">{{ facet.label[1] }}</span>{{ facet.label[2] }}
+                </a>
+              </li>
+            </template>
+            <template [ngIf]="facetSelected">
+              <li *ngFor="let option of filteredOptions; let i = index;">
+                <a (click)="optionClicked(i, option.key)" *ngIf="!isMatchLabel(option.label)">
+                  {{ option.label }}
+                </a>
+                <a (click)="optionClicked(i, option.key)" *ngIf="isMatchLabel(option.label)">
+                  {{ option.label[0] }}<span class="match">{{ option.label[1] }}</span>{{ option.label[2] }}
+                </a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a (click)="clearSearch()" *ngIf="currentSearch.length > 0" title="{{ strings.cancel }}">
+      <i class="fa fa-times cancel"></i>
+    </a>
+  </div>
+</div>

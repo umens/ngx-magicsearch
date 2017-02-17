@@ -32,11 +32,11 @@ export class AppComponent {
   ];
 
   searchUpdated(terms) {
-    console.log(terms);
+    // console.log(terms);
   };
 
   textSearch(customTerm) {
-    console.log(customTerm);
+    // console.log(customTerm);
   };
 
   constructor() {

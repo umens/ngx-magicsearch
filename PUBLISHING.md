@@ -8,6 +8,7 @@ Then to publish:
 1. Setup `packagepublish.json` the way you want your library published (Bumping correct version and setting the description, author, keywords, repo, main, and typings correctly for instance).
 2. `node prep publish` (This will set your `package.json` to be your `packagepublish.json`).
 3. `npm run build` (Create a fresh build of your library)
+3. Update the verion in README.md, package.json, packagepublish.json and packagedev.json
 4. `npm publish`
 
 ### Back to development

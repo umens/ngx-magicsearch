@@ -31,6 +31,14 @@ export class AppComponent {
     }
   ];
 
+  searchUpdated(terms) {
+    console.log(terms);
+  };
+
+  textSearch(customTerm) {
+    console.log(customTerm);
+  };
+
   constructor() {
     // Do something with sampleService
   }

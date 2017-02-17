@@ -10,8 +10,8 @@ export class NgxMagicSearchComponent implements OnInit {
 
   @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string} = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
   @Input('facets_param') facets_param: Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string = [];
-  @Output() textSearchEvent = new EventEmitter<{searchVal: string, filter_keys: any}>();
-  @Output() searchUpdatedEvent = new EventEmitter<string>();
+  @Output() textSearchEvent = new EventEmitter<string>();
+  @Output() searchUpdatedEvent = new EventEmitter<Array<{key: string, values: Array<string>}>>();
 
   private setFocusedEventEmitter = new EventEmitter<boolean>();
 
@@ -22,7 +22,6 @@ export class NgxMagicSearchComponent implements OnInit {
   private facetsSave;
   private facetSelected;
   private filteredObj;
-  private filter_keys;
   private filteredOptions;
   private facetOptions;
   private textSearch;
@@ -64,7 +63,17 @@ export class NgxMagicSearchComponent implements OnInit {
   initFacets(): void {
     let that = this;
     // set facets selected and remove them from facetsObj
-    let initialFacets: any = window.location.search;
+    let initialFacets: string|Array<string> = window.location.search;
+    if(initialFacets.length < 1) {
+      for (let i = 0; i < this.currentSearch.length; i++) {
+        if (this.currentSearch[i].name.indexOf('text') !== 0) {
+          if (initialFacets.length > 0) { initialFacets = initialFacets + '&'; }
+          initialFacets = initialFacets + this.currentSearch[i].name;
+        }
+      }
+      this.facetsObj = this.copyFacets(this.facetsSave);
+      this.currentSearch = [];
+    }
     if (initialFacets.indexOf('?') === 0) {
       initialFacets = initialFacets.slice(1);
     }
@@ -209,7 +218,7 @@ export class NgxMagicSearchComponent implements OnInit {
           this.filteredObj = filtered;
         }, 0.1);
       } else {
-        this.textSearchEvent.emit({searchVal: searchVal, filter_keys: this.filter_keys});
+        this.textSearchEvent.emit(searchVal);
         this.hideMenu();
       }
     } else {  // assume option search
@@ -253,6 +262,7 @@ export class NgxMagicSearchComponent implements OnInit {
    * @memberOf NgxMagicSearchComponent
    */
   resetState = function () {
+    this.updateUrl('');
     this.searchInput = '';
     this.filteredObj = this.facetsObj;
     this.facetSelected = undefined;
@@ -283,6 +293,64 @@ export class NgxMagicSearchComponent implements OnInit {
   hideMenu(): void {
      this.isMenuOpen = false;
   };
+
+  /**
+   *
+   *
+   * @param {string} query
+   *
+   * @memberOf NgxMagicSearchComponent
+   */
+  updateUrl(query: string): void {
+    let url = window.location.href;
+    if (url.indexOf("?") > -1) {
+      url = url.split("?")[0];
+    }
+    if (query.length > 0) {
+      url = url + "?" + query;
+    }
+    window.history.pushState(query, "", url);
+  }
+
+  /**
+   *
+   *
+   * @returns {Array<{key: string, values: Array<string>}>}
+   *
+   * @memberOf NgxMagicSearchComponent
+   */
+  buildTermsArray(): Array<{key: string, values: Array<string>}> {
+    let that = this;
+    let returnArray: Array<{key: string, values: Array<string>}> = [];
+    this.currentSearch.forEach(function(item) {
+      let explode = item.name.split('=');
+      if(that.getIndexBy(returnArray, 'key', explode[0]) != -1){
+        returnArray[that.getIndexBy(returnArray, 'key', explode[0])].values.push(explode[1]);
+      } else {
+        returnArray.push({key: explode[0], values: [explode[1]]});
+      }
+    });
+    return returnArray;
+  }
+
+  /**
+   *
+   *
+   * @param {Array<any>} array
+   * @param {string} key_name
+   * @param {(number|string)} value
+   * @returns {number}
+   *
+   * @memberOf NgxMagicSearchComponent
+   */
+  getIndexBy(array: Array<any>, key_name: string, value: number|string): number {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i][key_name] === value) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
 
   /*****************************************************************/
@@ -342,7 +410,7 @@ export class NgxMagicSearchComponent implements OnInit {
       if (textFilter === undefined) {
         textFilter = '';
       }
-      this.textSearchEvent.emit({searchVal: textFilter, filter_keys: this.filter_keys});
+      this.textSearchEvent.emit(searchVal);
       return;
     }
     if (key === 13) {  // enter, so accept value
@@ -365,7 +433,7 @@ export class NgxMagicSearchComponent implements OnInit {
 
         this.hideMenu();
         this.searchInput = '';
-        this.textSearchEvent.emit({searchVal: searchVal, filter_keys: this.filter_keys});
+        this.textSearchEvent.emit(searchVal);
         this.textSearch = searchVal;
       }
       this.filteredObj = this.facetsObj;
@@ -373,7 +441,7 @@ export class NgxMagicSearchComponent implements OnInit {
       if (searchVal === '') {
         this.filteredObj = this.facetsObj;
 
-        this.textSearchEvent.emit({searchVal: '', filter_keys: this.filter_keys});
+        this.textSearchEvent.emit('');
         if (this.facetSelected && this.facetSelected.options === undefined) {
           this.resetState();
         }
@@ -408,7 +476,7 @@ export class NgxMagicSearchComponent implements OnInit {
     if (searchVal === '') {
       this.filteredObj = this.facetsObj;
 
-      this.textSearchEvent.emit({searchVal: '', filter_keys: this.filter_keys});
+      this.textSearchEvent.emit('');
       if (this.facetSelected && this.facetSelected.options === undefined) {
         this.resetState();
       }
@@ -497,10 +565,11 @@ export class NgxMagicSearchComponent implements OnInit {
       }
     }
     if (removed !== undefined && removed.indexOf('text') === 0) {
-      this.textSearchEvent.emit({searchVal: '', filter_keys: this.filter_keys});
+      this.textSearchEvent.emit('');
       this.textSearch = undefined;
     } else {
-      this.searchUpdatedEvent.emit(query);
+      this.searchUpdatedEvent.emit(this.buildTermsArray());
+      this.updateUrl(query);
       if (this.currentSearch.length > 0) {
         // prune facets as needed from menus
         let newFacet = this.currentSearch[this.currentSearch.length - 1].name;
@@ -538,8 +607,8 @@ export class NgxMagicSearchComponent implements OnInit {
       this.strings.prompt = this.promptString;
     }
     // re-init to restore facets cleanly
-    this.facetsObj = this.copyFacets(this.facetsSave);
-    this.currentSearch = [];
+    // this.facetsObj = this.copyFacets(this.facetsSave);
+    // this.currentSearch = [];
     this.initFacets();
   };
 
@@ -554,8 +623,8 @@ export class NgxMagicSearchComponent implements OnInit {
       this.currentSearch = [];
       this.facetsObj = this.copyFacets(this.facetsSave);
       this.resetState();
-      this.searchUpdatedEvent.emit('');
-      this.textSearchEvent.emit({searchVal: '', filter_keys: this.filter_keys});
+      this.searchUpdatedEvent.emit(null);
+      this.textSearchEvent.emit('');
     }
   };
 

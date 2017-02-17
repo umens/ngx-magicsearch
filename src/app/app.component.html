@@ -6,7 +6,7 @@
   <!-- Images (and assets) are parsed and loaded from within the public directory -->
   <img src="/img/angular.png">
 
-  <ngx-magic-search [facets_param]="choices"></ngx-magic-search>
+  <ngx-magic-search [facets_param]="choices" (textSearchEvent)="textSearch($event)" (searchUpdatedEvent)="searchUpdated($event)"></ngx-magic-search>
 
 </main>
 <footer>

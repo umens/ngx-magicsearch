@@ -1,6 +1,6 @@
 {
   "name": "ngx-magicsearch",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
   "main": "ngx-magicsearch",
   "typings": "ngx-magicsearch.d.ts",
@@ -37,7 +37,7 @@
     "e2e": "protractor",
     "e2e-live": "protractor --elementExplorer",
     "pretest": "npm run lint",
-    "test": "karma start",
+    "test": "karma start karma.conf.js --single-run",
     "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
     "test-watch": "karma start --no-single-run --auto-watch",
     "ci": "npm run e2e && npm run test",

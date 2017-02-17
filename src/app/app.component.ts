@@ -11,23 +11,29 @@ export class AppComponent {
   url: string = 'https://github.com/umens/ngx-magicsearch';
 
   choices = [
-    {'name': 'owner_alias',
+    {
+      'name': 'owner_alias',
       'label': 'Images owned by',
-      'options':
-        [{'key': '', 'label': 'Anyone'},
-        {'key': 'self', 'label': 'Me (or shared with me)'}]
+      'options': [
+        {'key': '', 'label': 'Anyone'},
+        {'key': 'self', 'label': 'Me (or shared with me)'}
+      ]
     },
-    {'name': 'platform',
+    {
+      'name': 'platform',
       'label': 'Platform',
-      'options':
-        [{'key': 'linux', 'label': 'Linux'},
-        {'key': 'windows', 'label': 'Windows'}]
+      'options': [
+        {'key': 'linux', 'label': 'Linux'},
+        {'key': 'windows', 'label': 'Windows'}
+      ]
     },
-    {'name': 'architecture',
+    {
+      'name': 'architecture',
       'label': 'Architecture',
-      'options':
-        [{'key': 'x86_64', 'label': '64-bit'},
-        {'key': 'i386', 'label': '32-bit'}],
+      'options': [
+        {'key': 'x86_64', 'label': '64-bit'},
+        {'key': 'i386', 'label': '32-bit'}
+      ],
     }
   ];
 

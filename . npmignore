@@ -6,3 +6,9 @@ npm-debug*
 packagedev.json
 packagepublish.json
 prep.js
+src
+karma*.*
+.travis.yml
+systemjs.config.js
+.gitignore
+tsconfig.json

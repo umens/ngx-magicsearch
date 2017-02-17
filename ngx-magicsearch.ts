@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
 import { NgxMagicSearchComponent } from './src/app/components/ngx-magic-search.component';
+import { NgxMagicSearchDirective } from './src/app/directives/ngx-magic-search.directive';
 
 // for manual imports
 export * from './src/app/components/ngx-magic-search.component';
@@ -7,6 +8,7 @@ export * from './src/app/components/ngx-magic-search.component';
 @NgModule({
   declarations: [
     NgxMagicSearchComponent,
+    NgxMagicSearchDirective,
   ],
   providers: [
   ],

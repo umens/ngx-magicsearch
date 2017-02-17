@@ -2,10 +2,28 @@
   "name": "ngx-magicsearch",
   "version": "0.0.0",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
+  "main": "ngx-magicsearch",
+  "typings": "ngx-magicsearch.d.ts",
   "repository": {
-    "url": "https://github.com/umens/ngx-magicsearch"
+    "type": "git",
+    "url": "https://github.com/umens/ngx-magicsearch.git"
   },
+  "keywords": [
+    "angular",
+    "ng",
+    "ngx",
+    "ng2",
+    "angular2",
+    "magicsearch",
+    "faceted-search",
+    "typescript"
+  ],
+  "author": "Mensa Ulysse <ulysse.mensa@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/umens/ngx-magicsearch/issues"
+  },
+  "homepage": "https://github.com/umens/ngx-magicsearch#readme",
   "scripts": {
     "clean": "rimraf node_modules doc dist && npm cache clean",
     "clean-install": "npm run clean && npm install",

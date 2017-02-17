@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NgxMagicSearchComponent } from './components/ngx-magic-search.component';
@@ -13,6 +14,7 @@ describe('App', () => {
         NgxMagicSearchComponent,
         NgxMagicSearchDirective
       ],
+      imports: [ FormsModule ],
       providers: []
     });
   });

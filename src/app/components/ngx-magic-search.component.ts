@@ -1,4 +1,5 @@
 import {HostListener, Output,  OnInit,  Component,  Input,  EventEmitter} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'ngx-magic-search',

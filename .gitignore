@@ -185,6 +185,7 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/visualstudiocode,sublimetext,node,composer,linux,macos,osx,windows,git
 
 ## lib specific
+lib/*
 
 ngx-magicsearch.js*
 ngx-magicsearch.d.ts

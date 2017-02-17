@@ -2,17 +2,35 @@
   "name": "ngx-magicsearch",
   "version": "0.0.0",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
+  "main": "ngx-magicsearch",
+  "typings": "ngx-magicsearch.d.ts",
   "repository": {
-    "url": "https://github.com/umens/ngx-magicsearch"
+    "type": "git",
+    "url": "https://github.com/umens/ngx-magicsearch.git"
   },
+  "keywords": [
+    "angular",
+    "ng",
+    "ngx",
+    "ng2",
+    "angular2",
+    "magicsearch",
+    "faceted-search",
+    "typescript"
+  ],
+  "author": "Mensa Ulysse <ulysse.mensa@gmail.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/umens/ngx-magicsearch/issues"
+  },
+  "homepage": "https://github.com/umens/ngx-magicsearch#readme",
   "scripts": {
     "clean": "rimraf node_modules doc dist && npm cache clean",
     "clean-install": "npm run clean && npm install",
     "clean-start": "npm run clean-install && npm start",
     "watch": "webpack --watch --progress --profile",
     "build": "tsc --p tsconfig-build.json",
-    "server": "webpack-dev-server --inline --progress --port 8080",
+    "server": "webpack-dev-server --inline --progress --port 8888",
     "webdriver-update": "webdriver-manager update",
     "webdriver-start": "webdriver-manager start",
     "lint": "tslint --force \"src/**/*.ts\"",
@@ -38,6 +56,7 @@
     "@angular/platform-browser-dynamic": "2.4.2",
     "@angular/router": "3.4.2",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.1",
     "zone.js": "^0.7.2"

@@ -1,19 +1,45 @@
 import { Component } from '@angular/core';
 
-import {SampleService} from './services/sample.service';
-
 import '../style/app.scss';
 
 @Component({
-  selector: 'my-app', // <my-app></my-app>
+  selector: 'ngx-app', // <my-app></my-app>
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  pipeTest: string = 'Create an amazing community by contributing a library';
   url: string = 'https://github.com/umens/ngx-magicsearch';
 
-  constructor(public sampleService: SampleService) {
+  choices = [
+    {'name': 'owner_alias',
+      'label': 'Images owned by',
+      'options':
+        [{'key': '', 'label': 'Anyone'},
+        {'key': 'self', 'label': 'Me (or shared with me)'}]
+    },
+    {'name': 'platform',
+      'label': 'Platform',
+      'options':
+        [{'key': 'linux', 'label': 'Linux'},
+        {'key': 'windows', 'label': 'Windows'}]
+    },
+    {'name': 'architecture',
+      'label': 'Architecture',
+      'options':
+        [{'key': 'x86_64', 'label': '64-bit'},
+        {'key': 'i386', 'label': '32-bit'}],
+    }
+  ];
+
+  searchUpdated(terms) {
+    console.log(terms);
+  };
+
+  textSearch(customTerm) {
+    console.log(customTerm);
+  };
+
+  constructor() {
     // Do something with sampleService
   }
 }

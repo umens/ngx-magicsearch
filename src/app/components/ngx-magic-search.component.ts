@@ -64,7 +64,7 @@ export class NgxMagicSearchComponent implements OnInit {
     let that = this;
     // set facets selected and remove them from facetsObj
     let initialFacets: string|Array<string> = window.location.search;
-    if(initialFacets.length < 1) {
+    if (initialFacets.length < 1) {
       for (let i = 0; i < this.currentSearch.length; i++) {
         if (this.currentSearch[i].name.indexOf('text') !== 0) {
           if (initialFacets.length > 0) { initialFacets = initialFacets + '&'; }
@@ -303,13 +303,13 @@ export class NgxMagicSearchComponent implements OnInit {
    */
   updateUrl(query: string): void {
     let url = window.location.href;
-    if (url.indexOf("?") > -1) {
-      url = url.split("?")[0];
+    if (url.indexOf('?') > -1) {
+      url = url.split('?')[0];
     }
     if (query.length > 0) {
-      url = url + "?" + query;
+      url = url + '?' + query;
     }
-    window.history.pushState(query, "", url);
+    window.history.pushState(query, '', url);
   }
 
   /**
@@ -324,7 +324,7 @@ export class NgxMagicSearchComponent implements OnInit {
     let returnArray: Array<{key: string, values: Array<string>}> = [];
     this.currentSearch.forEach(function(item) {
       let explode = item.name.split('=');
-      if(that.getIndexBy(returnArray, 'key', explode[0]) != -1){
+      if (that.getIndexBy(returnArray, 'key', explode[0]) !== -1) {
         returnArray[that.getIndexBy(returnArray, 'key', explode[0])].values.push(explode[1]);
       } else {
         returnArray.push({key: explode[0], values: [explode[1]]});
@@ -344,7 +344,7 @@ export class NgxMagicSearchComponent implements OnInit {
    * @memberOf NgxMagicSearchComponent
    */
   getIndexBy(array: Array<any>, key_name: string, value: number|string): number {
-    for (var i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
       if (array[i][key_name] === value) {
         return i;
       }

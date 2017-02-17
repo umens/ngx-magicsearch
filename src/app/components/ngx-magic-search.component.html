@@ -5,7 +5,7 @@
       <span class="item-list" *ngIf="currentSearch">
         <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item">
           <span>{{ facet.label[0] }}:<b>{{ facet.label[1] }}</b></span>
-      <a class="remove-{{i}}" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
+      <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
       </span>
       </span>
       <span class="search-selected ngx-label" *ngIf="facetSelected">

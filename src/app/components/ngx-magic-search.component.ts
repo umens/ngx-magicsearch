@@ -536,7 +536,6 @@ export class NgxMagicSearchComponent implements OnInit {
    * @memberOf NgxMagicSearchComponent
    */
   optionClicked(index: number, name: string): void {
-    this.hideMenu();
     let curr = this.facetSelected;
     curr.name = curr.name + '=' + name;
     curr.label[1] = this.filteredOptions[index].label;
@@ -546,7 +545,9 @@ export class NgxMagicSearchComponent implements OnInit {
     this.currentSearch.push(curr);
     this.resetState();
     this.emitQuery();
-    this.showMenu();
+    setTimeout(() => {
+      this.hideMenu();
+    }, 0.1);
   };
   /**
    * send event with new query string
@@ -607,8 +608,8 @@ export class NgxMagicSearchComponent implements OnInit {
       this.strings.prompt = this.promptString;
     }
     // re-init to restore facets cleanly
-    // this.facetsObj = this.copyFacets(this.facetsSave);
-    // this.currentSearch = [];
+    this.facetsObj = this.copyFacets(this.facetsSave);
+    this.currentSearch = [];
     this.initFacets();
   };
 

@@ -38,6 +38,10 @@
   border-radius: 3px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  li:hover {
+    cursor: pointer;
+    background-color: #eaeaea;
+  }
 }
 
 .arrow-up {
@@ -92,7 +96,7 @@ $itembackground: #e6e7e8;
     position: relative;
     /*display: inline-block;*/
     /*height: 20px;*/
-    margin-top: 6px;
+    margin-top: 9px;
     float: left;
     .item {
       color: #333;
@@ -100,11 +104,15 @@ $itembackground: #e6e7e8;
       /* height: 30px; */
       margin-right: 0.5rem;
       display: inline-block;
-      padding: 4px;
+      padding: 6px;
+      font-size: 0.80rem;
       /* font-size: 12px; */
       /* margin-top: 8px; */
       a {
         color: white;
+      }
+      a.remove:hover {
+        cursor: pointer;
       }
     }
   }
@@ -173,6 +181,7 @@ $itembackground: #e6e7e8;
     margin: 6px 0;
     background-color: $background;
     color: $textcolor;
+    height: 28px;
     &:focus {
       box-shadow: none;
       background-color: $background;
@@ -185,6 +194,7 @@ $itembackground: #e6e7e8;
     color: $iconcolor;
     &:hover {
       color: darkred;
+      cursor: pointer;
     }
     position: absolute;
     top: 0.75rem;

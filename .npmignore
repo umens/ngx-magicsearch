@@ -12,6 +12,7 @@ karma*.*
 systemjs.config.js
 tsconfig.json
 tsconfig-build.json
+ngx-magicsearch-build.ts
 tslint.json
 PUBLISHING.md
 CONTRIBUTING.md

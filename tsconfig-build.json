@@ -10,7 +10,7 @@
     "outDir": "lib"
   },
   "files": [
-    "ngx-magicsearch.ts"
+    "ngx-magicsearch-build.ts"
   ],
   "exclude": [
     "node_modules",

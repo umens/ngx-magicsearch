@@ -105,9 +105,6 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "directive-selector-prefix": [true, "ngx"],
-    "component-selector-prefix": [true, "ngx"],
-    "pipe-naming": [true, "camelCase", "ngx"]
+    "directive-class-suffix": true
   }
 }

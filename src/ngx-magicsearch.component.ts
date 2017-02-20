@@ -195,8 +195,8 @@ import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output,
           <span class="item-list" *ngIf="currentSearch">
             <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item">
               <span>{{ facet.label[0] }}:<b>{{ facet.label[1] }}</b></span>
-          <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
-          </span>
+              <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
+            </span>
           </span>
           <span class="search-selected ngx-label" *ngIf="facetSelected">
             {{ facetSelected.label[0] }}:
@@ -294,11 +294,12 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.facetsObj = JSON.parse(tmp);
     } else {
       // Assume this is a usable javascript object
-      this.facetsObj = this.facets_param;
+      this.facetsObj = this.facets_param.slice(0);
     }
     this.facetsSave = this.copyFacets(this.facetsObj);
+    this.currentSearch = [];
     this.initFacets();
-  };
+  }
 
 
   /**
@@ -310,7 +311,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   initFacets(): void {
     let that = this;
     // set facets selected and remove them from facetsObj
-    let initialFacets: string|Array<string> = window.location.search;
+    let initialFacets: string|Array<string> = (window.location.hash.split('?')[1] === undefined) ? '' : '?' + window.location.hash.split('?')[1];
     if (initialFacets.length < 1) {
       for (let i = 0; i < this.currentSearch.length; i++) {
         if (this.currentSearch[i].name.indexOf('text') !== 0) {
@@ -356,7 +357,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.currentSearch.push({ 'name': 'text=' + this.textSearch, 'label': [this.strings.text, this.textSearch] });
     }
     this.filteredObj = this.facetsObj;
-  };
+  }
 
   /**
    * add a facets javascript object to the existing list
@@ -370,7 +371,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     facets.forEach(function(facet) {
       that.facetsObj.append(facet);
     });
-  };
+  }
 
   /**
    *
@@ -393,7 +394,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       ret.push(facet);
     }
     return ret;
-  };
+  }
 
   /**
    *
@@ -420,7 +421,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         }
       }
     });
-  };
+  }
 
   /**
    * remove entire facet
@@ -436,7 +437,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         that.facetsObj.splice(that.facetsObj.indexOf(facet), 1);
       }
     });
-  };
+  }
 
   /**
    * try filtering facets/options.. if no facets match, do text search
@@ -488,7 +489,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         }, 0.1);
       }
     }
-  };
+  }
 
   /**
    *
@@ -500,7 +501,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    */
   isMatchLabel(label: string): boolean {
     return Array.isArray(label);
-  };
+  }
 
   /**
    *
@@ -518,7 +519,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (this.currentSearch.length === 0) {
       this.strings.prompt = this.promptString;
     }
-  };
+  }
 
   /**
    * showMenu and hideMenu depend on foundation's dropdown. They need
@@ -529,7 +530,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    */
   showMenu(): void {
     this.isMenuOpen = true;
-  };
+  }
 
   /**
    * hide dropdown
@@ -539,7 +540,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    */
   hideMenu(): void {
      this.isMenuOpen = false;
-  };
+  }
 
   /**
    *
@@ -616,7 +617,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (key === 9) {  // prevent default when we can.
       event.preventDefault();
     }
-  };
+  }
 
   /**
    *
@@ -696,7 +697,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         this.filterFacets(searchVal);
       }
     }
-  };
+  }
 
   /**
    *
@@ -732,7 +733,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (key !== 8 && key !== 46) {
       this.filterFacets(searchVal);
     }
-  };
+  }
 
   /**
    * enable text entry when mouse clicked anywhere in search box
@@ -772,7 +773,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     setTimeout(() => {
       this.setFocusedEventEmitter.emit(true);
     }, 0.1);
-  };
+  }
 
   /**
    * when option clicked, complete facet and send event
@@ -795,7 +796,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     setTimeout(() => {
       this.hideMenu();
     }, 0.1);
-  };
+  }
+
   /**
    * send event with new query string
    *
@@ -833,7 +835,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         });
       }
     }
-  };
+  }
 
   /**
    * remove facet and either update filter or search
@@ -858,7 +860,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     this.facetsObj = this.copyFacets(this.facetsSave);
     this.currentSearch = [];
     this.initFacets();
-  };
+  }
 
   /**
    * clear entire searchbar
@@ -874,7 +876,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchUpdatedEvent.emit(null);
       this.textSearchEvent.emit('');
     }
-  };
+  }
 
   /** Catch click outside of the component */
 
@@ -896,13 +898,13 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       // that we can simply use the event type to reference the
       // correct output event stream.
       this.hideMenu();
-  };
+  }
 
   // I start tracking the new host event triggered by one of the core
   // DOM event bindings.
   @HostListener('click', ['$event'])
     trackEvent( newHostEvent ): void {
       this.hostEvent = newHostEvent;
-  };
+  }
 
 }

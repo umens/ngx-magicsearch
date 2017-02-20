@@ -1,4 +1,4 @@
-import {HostListener, Output,  OnInit,  Component,  Input,  EventEmitter} from '@angular/core';
+import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output, OnInit, Component, Input, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'ngx-magic-search',
@@ -235,7 +235,7 @@ import {HostListener, Output,  OnInit,  Component,  Input,  EventEmitter} from '
       </div>
     </div>`
 })
-export class NgxMagicSearchComponent implements OnInit {
+export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
   @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string} = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
   @Input('facets_param') facets_param: Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string = [];
@@ -256,12 +256,30 @@ export class NgxMagicSearchComponent implements OnInit {
   private textSearch;
   private isMenuOpen = false;
 
+  private differ: any;
+
   // event listener
   private hostEvent = null;
+
+  constructor(private differs: KeyValueDiffers) {
+		this.differ = differs.find({}).create(null);
+	}
 
   ngOnInit() {
     this.initSearch();
   }
+
+  ngOnChanges() {
+    this.initSearch();
+  }
+
+	ngDoCheck() {
+		var changes = this.differ.diff(this.facets_param);
+
+		if(changes) {
+      this.initSearch();
+		}
+	}
 
   /**
    *

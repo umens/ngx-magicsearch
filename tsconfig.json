@@ -1,16 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "noImplicitAny": false,
     "module": "commonjs",
+    "target": "ES5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noEmitHelpers": true
+    "declaration": true,
+    "outDir": "./lib",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
+  "files": [
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
   }
 }

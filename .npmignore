@@ -6,7 +6,7 @@ npm-debug*
 packagedev.json
 packagepublish.json
 prep.js
-/src
+#/src
 karma*.*
 .travis.yml
 systemjs.config.js

@@ -1,6 +1,6 @@
 {
   "name": "ngx-magicsearch",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
   "repository": {
     "type": "git",
@@ -30,7 +30,9 @@
     "tsc": "tsc"
   },
   "main": "./lib/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  },
   "devDependencies": {
     "@angular/common": "^2.4.8",
     "@angular/forms": "2.4.8",

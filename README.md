@@ -2,7 +2,7 @@
 
 |        Branch        |       Build Status     |   Dependency Status  |  devDependency Status  |         Version        |
 | ---------------------|------------------------|----------------------|------------------------|:----------------------:|
-| Master               | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=master)](https://travis-ci.org/umens/ngx-magicsearch) | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/master/status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/master/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=devDependencies) | 1.0.7 |
+| Master               | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=master)](https://travis-ci.org/umens/ngx-magicsearch) | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/master/status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/master/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=devDependencies) | 1.1.0 |
 | Develop              | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=develop)](https://travis-ci.org/umens/ngx-magicsearch)      | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=devDependencies) | - |
 
 Magic Search/Faceted Search Library for Angular 2 project
@@ -11,7 +11,7 @@ Magic Search/Faceted Search Library for Angular 2 project
 
 ## Getting Started
 
-These instructions are here to set up the library in your project. 
+These instructions are here to set up the library in your project.
 
 See [Contributing](#Contributing) for instructions that will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -45,12 +45,12 @@ HTML
 <ngx-magic-search [strings]="lang" [facets_param]="choices" (textSearchEvent)="textSearch($event)" (searchUpdatedEvent)="searchUpdated($event)"></ngx-magic-search>
 ```
 #### Plugin options
-##### [facets_param] - *object* 
+##### [facets_param] - *object*
 ```javascript
 Array<{name: string, label: string, options: Array<{key: string, label: string}>}>
 ```
 Array of your filters - *see [example](#Example) below*
-##### [strings] - *object* - *optionnal* 
+##### [strings] - *object* - *optionnal*
 ```javascript
 {remove: string, cancel: string, prompt: string, text: string}
 ```
@@ -62,16 +62,16 @@ Default value :
 
 For Internationalization(i18n) purpose.
 
-##### (searchUpdatedEvent) - *Event* 
-Event fire when user select a new search term. Return an array of type 
+##### (searchUpdatedEvent) - *Event*
+Event fire when user select a new search term. Return an array of type
 ```javascript
 Array<{key: string, values: Array<string>}>
 ```
-Where 
+Where
 - key = facets_param.name
 - value = facets_param.options.key
 
-##### (textSearchEvent) - *Event* 
+##### (textSearchEvent) - *Event*
 Event fire when user make a search with a text. Return a `string`
 
 ### Usage/Example

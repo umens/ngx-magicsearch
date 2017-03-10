@@ -191,6 +191,8 @@ ngx-magicsearch.js*
 ngx-magicsearch.d.ts
 src/**/*.js*
 src/**/*.d.ts
+*.ngfactory.ts
+*.ngsummary.json
 
 # Node
 node_modules/*

@@ -238,7 +238,7 @@ import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output,
 export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
   @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string} = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
-  @Input('facets_param') facets_param: Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string = [];
+  @Input('facets_param') facets_param: /*Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string*/any = [];
   @Output() textSearchEvent = new EventEmitter<string>();
   @Output() searchUpdatedEvent = new EventEmitter<Array<{key: string, values: Array<string>}>>();
 
@@ -797,6 +797,39 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.hideMenu();
     }, 0.1);
   }
+
+  /**
+   *
+   *
+   * @param {string} category
+   * @param {string} option
+   *
+   * @memberOf NgxMagicSearchComponent
+   */
+  addFilterManually(category: string, option: string): void {
+    const indexCategory: number = this.facets_param.findIndex(categoryElement => categoryElement.name === category);
+    const indexOption: number = (indexCategory !== -1) ? this.facets_param[indexCategory].options.findIndex(optionElement => optionElement.key === option) : -1;
+    if (indexCategory !== -1 && indexOption !== -1) {
+      this.facetClicked(indexCategory, category);
+      this.optionClicked(indexOption, option)
+    }
+    console.log(this.currentSearch);
+  };
+
+  /**
+   *
+   *
+   * @param {string} category
+   * @param {string} option
+   *
+   * @memberOf NgxMagicSearchComponent
+   */
+  removeFilterManually(category: string, option: string): void {
+    const indexSearch: number = this.currentSearch.findIndex(searchElement => searchElement.name === category + '=' + option);
+    if (indexSearch !== -1) {
+        this.removeFacet(indexSearch);
+    }
+  };
 
   /**
    * send event with new query string

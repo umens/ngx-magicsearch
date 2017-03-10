@@ -813,7 +813,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.facetClicked(indexCategory, category);
       this.optionClicked(indexOption, option)
     }
-    console.log(this.currentSearch);
   };
 
   /**

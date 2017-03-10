@@ -807,8 +807,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    * @memberOf NgxMagicSearchComponent
    */
   addFilterManually(category: string, option: string): void {
-    const indexCategory: number = this.facets_param.findIndex(categoryElement => categoryElement.name === category);
-    const indexOption: number = (indexCategory !== -1) ? this.facets_param[indexCategory].options.findIndex(optionElement => optionElement.key === option) : -1;
+    const indexCategory: number = this.filteredObj.findIndex(categoryElement => categoryElement.name === category);
+    const indexOption: number = (indexCategory !== -1) ? this.filteredObj[indexCategory].options.findIndex(optionElement => optionElement.key === option) : -1;
     if (indexCategory !== -1 && indexOption !== -1) {
       this.facetClicked(indexCategory, category);
       this.optionClicked(indexOption, option)

@@ -27,6 +27,8 @@ npm-debug.log
 # *.js
 # *.map
 # *.d.ts
+# *.ngfactory.ts
+# *.ngsummary.json
 
 # JetBrains
 .idea

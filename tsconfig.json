@@ -1,26 +1,17 @@
+// This file is only used to configure the editor during development.
+// It is NOT used for building the library.
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "target": "ES5",
-    "emitDecoratorMetadata": true,
+    "baseUrl": "./src",
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "./lib",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  },
-  "files": [
-    "index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "**/*.spec.ts"
-  ],
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    // Don't auto-discover @types/node, it results in a ///<reference in the .d.ts output
+    "types": []
   }
 }

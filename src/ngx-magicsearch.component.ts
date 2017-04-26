@@ -1,4 +1,5 @@
-import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output, OnInit, Component, Input, EventEmitter} from '@angular/core';
+import { DoCheck, KeyValueDiffers, OnChanges, HostListener,
+  Output, OnInit, Component, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'ngx-magic-search',
@@ -203,19 +204,28 @@ import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output,
           </span>
           <!-- For bootstrap, the dropdown attribute is moved from input up to div. -->
           <div [ngClass]="{'search-entry': true, 'dropdown': true, 'active': isMenuOpen}">
-            <input class="search-input" type="text" placeholder="{{ strings.prompt }}" autocomplete="off" (keyup)="handleKeyUp($event)" (keydown)="handleKeyDown($event)" (keypress)="handleKeyPress($event)" [(ngModel)]="searchInput" [ngxFocus]="setFocusedEventEmitter">
+            <input
+              class="search-input" type="text"
+              placeholder="{{ strings.prompt }}"
+              autocomplete="off"
+              (keyup)="handleKeyUp($event)"
+              (keydown)="handleKeyDown($event)"
+              (keypress)="handleKeyPress($event)"
+              [(ngModel)]="searchInput"
+              [ngxFocus]="setFocusedEventEmitter"
+            />
             <div class="dropdown-content" *ngIf="filteredObj.length > 0">
               <div class="arrow-up"></div>
               <ul class="ngx-dropdown-menu">
-                <template [ngIf]="!facetSelected">
+                <ng-template [ngIf]="!facetSelected">
                   <li *ngFor="let facet of filteredObj; let i = index;">
                     <a (click)="facetClicked(i, facet.name)" *ngIf="!isMatchLabel(facet.label)">{{ facet.label }}</a>
                     <a (click)="facetClicked(i, facet.name)" *ngIf="isMatchLabel(facet.label)">
                       {{ facet.label[0] }}<span class="match">{{ facet.label[1] }}</span>{{ facet.label[2] }}
                     </a>
                   </li>
-                </template>
-                <template [ngIf]="facetSelected">
+                </ng-template>
+                <ng-template [ngIf]="facetSelected">
                   <li *ngFor="let option of filteredOptions; let i = index;">
                     <a (click)="optionClicked(i, option.key)" *ngIf="!isMatchLabel(option.label)">
                       {{ option.label }}
@@ -224,7 +234,7 @@ import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output,
                       {{ option.label[0] }}<span class="match">{{ option.label[1] }}</span>{{ option.label[2] }}
                     </a>
                   </li>
-                </template>
+                </ng-template>
               </ul>
             </div>
           </div>
@@ -237,24 +247,27 @@ import {DoCheck, KeyValueDiffers, OnChanges, SimpleChange, HostListener, Output,
 })
 export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
-  @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string} = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
-  @Input('facets_param') facets_param: /*Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string*/any = [];
+  @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string};
+
+  @Input('facets_param') facets_param: any = [];
+  /*Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string*/
+
   @Output() textSearchEvent = new EventEmitter<string>();
   @Output() searchUpdatedEvent = new EventEmitter<Array<{key: string, values: Array<string>}>>();
 
-  private setFocusedEventEmitter = new EventEmitter<boolean>();
+  setFocusedEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private searchInput: string = '';
+  searchInput: string;
   private promptString: string = this.strings.prompt;
-  private currentSearch = [];
+  currentSearch = [];
   private facetsObj = null;
   private facetsSave;
-  private facetSelected;
-  private filteredObj;
+  facetSelected;
+  filteredObj;
   private filteredOptions;
   private facetOptions;
   private textSearch;
-  private isMenuOpen = false;
+  isMenuOpen = false;
 
   private differ: any;
 
@@ -262,8 +275,10 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   private hostEvent = null;
 
   constructor(private differs: KeyValueDiffers) {
-		this.differ = differs.find({}).create(null);
-	}
+    this.differ = differs.find({}).create(null);
+    this.strings = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
+    this.searchInput = '';
+  }
 
   ngOnInit() {
     this.initSearch();
@@ -273,13 +288,13 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     this.initSearch();
   }
 
-	ngDoCheck() {
-		var changes = this.differ.diff(this.facets_param);
+  ngDoCheck() {
+    let changes = this.differ.diff(this.facets_param);
 
-		if(changes) {
+    if (changes) {
       this.initSearch();
-		}
-	}
+    }
+  }
 
   /**
    *
@@ -311,7 +326,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   initFacets(): void {
     let that = this;
     // set facets selected and remove them from facetsObj
-    let initialFacets: string|Array<string> = (window.location.hash.split('?')[1] === undefined) ? '' : '?' + window.location.hash.split('?')[1];
+    let initialFacets: string|Array<string> = (window.location.hash.split('?')[1] === undefined)
+      ? '' : '?' + window.location.hash.split('?')[1];
     if (initialFacets.length < 1) {
       for (let i = 0; i < this.currentSearch.length; i++) {
         if (this.currentSearch[i].name.indexOf('text') !== 0) {
@@ -456,7 +472,11 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         let facet = this.filteredObj[i];
         idx = facet.label.toLowerCase().indexOf(searchVal);
         if (idx > -1) {
-          label = [facet.label.substring(0, idx), facet.label.substring(idx, idx + searchVal.length), facet.label.substring(idx + searchVal.length)];
+          label = [
+            facet.label.substring(0, idx),
+            facet.label.substring(idx, idx + searchVal.length),
+            facet.label.substring(idx + searchVal.length)
+          ];
           filtered.push({ 'name': facet.name, 'label': label, 'options': facet.options });
         }
       }
@@ -478,7 +498,11 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         let option = this.filteredOptions[i];
         idx = option.label.toLowerCase().indexOf(searchVal);
         if (idx > -1) {
-          label = [option.label.substring(0, idx), option.label.substring(idx, idx + searchVal.length), option.label.substring(idx + searchVal.length)];
+          label = [
+            option.label.substring(0, idx),
+            option.label.substring(idx, idx + searchVal.length),
+            option.label.substring(idx + searchVal.length)
+          ];
           filtered.push({ 'key': option.key, 'label': label });
         }
       }
@@ -509,7 +533,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    *
    * @memberOf NgxMagicSearchComponent
    */
-  resetState = function () {
+  resetState(): void {
     this.updateUrl('');
     this.searchInput = '';
     this.filteredObj = this.facetsObj;
@@ -808,10 +832,11 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    */
   addFilterManually(category: string, option: string): void {
     const indexCategory: number = this.filteredObj.findIndex(categoryElement => categoryElement.name === category);
-    const indexOption: number = (indexCategory !== -1) ? this.filteredObj[indexCategory].options.findIndex(optionElement => optionElement.key === option) : -1;
+    const indexOption: number = (indexCategory !== -1) ?
+      this.filteredObj[indexCategory].options.findIndex(optionElement => optionElement.key === option) : -1;
     if (indexCategory !== -1 && indexOption !== -1) {
       this.facetClicked(indexCategory, category);
-      this.optionClicked(indexOption, option)
+      this.optionClicked(indexOption, option);
     }
   };
 

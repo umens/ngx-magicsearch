@@ -6,6 +6,8 @@
 | Develop              | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=develop)](https://travis-ci.org/umens/ngx-magicsearch)      | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=devDependencies) | - |
 
 Magic Search/Faceted Search Library for Angular 2 project
+ - use v1* for angular 2
+ - use v2.* for angular 4
 
 ![Example](http://g.recordit.co/GXi53Arzu9.gif)
 

@@ -5,7 +5,7 @@ import { Directive, ElementRef, EventEmitter, Renderer, Input, OnInit } from '@a
 })
 export class NgxMagicSearchDirective implements OnInit {
 
-  @Input('ngxFocus') focusEvent: EventEmitter<boolean>;
+  @Input() focusEvent: EventEmitter<boolean>;
 
   constructor(private el: ElementRef, private renderer: Renderer) { }
 

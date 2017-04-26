@@ -2,14 +2,18 @@
 
 |        Branch        |       Build Status     |   Dependency Status  |  devDependency Status  |         Version        |
 | ---------------------|------------------------|----------------------|------------------------|:----------------------:|
-| Master               | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=master)](https://travis-ci.org/umens/ngx-magicsearch) | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/master/status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/master/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=devDependencies) | 1.1.2 |
+| Master               | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=master)](https://travis-ci.org/umens/ngx-magicsearch) | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/master/status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/master/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/master#info=devDependencies) | 2.0.0 |
 | Develop              | [![Build Status](https://travis-ci.org/umens/ngx-magicsearch.svg?branch=develop)](https://travis-ci.org/umens/ngx-magicsearch)      | [![Dependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=dependencies) | [![devDependency Status](https://david-dm.org/umens/ngx-magicsearch/develop/dev-status.svg)](https://david-dm.org/umens/ngx-magicsearch/develop#info=devDependencies) | - |
 
 Magic Search/Faceted Search Library for Angular 2 project
+ - use v1* for angular 2
+ - use v2.* for angular 4
 
 ![Example](http://g.recordit.co/GXi53Arzu9.gif)
 
 ## Getting Started
+
+Use v1 for angular 2 v2 and v2 for angular 2 v4
 
 These instructions are here to set up the library in your project.
 

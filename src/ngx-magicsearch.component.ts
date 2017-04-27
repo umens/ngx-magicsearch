@@ -212,7 +212,7 @@ import { DoCheck, KeyValueDiffers, OnChanges, HostListener,
               (keydown)="handleKeyDown($event)"
               (keypress)="handleKeyPress($event)"
               [(ngModel)]="searchInput"
-              [ngxFocus]="setFocusedEventEmitter"
+              ngxFocus="setFocusedEventEmitter"
             />
             <div class="dropdown-content" *ngIf="filteredObj.length > 0">
               <div class="arrow-up"></div>
@@ -247,7 +247,12 @@ import { DoCheck, KeyValueDiffers, OnChanges, HostListener,
 })
 export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
-  @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string};
+  @Input('strings') strings: {remove: string, cancel: string, prompt: string, text: string} = {
+    remove: 'Remove facet',
+    cancel : 'Clear search',
+    prompt: 'Select facets or enter text',
+    'text': 'Text'
+  };
 
   @Input('facets_param') facets_param: any = [];
   /*Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string*/
@@ -255,7 +260,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   @Output() textSearchEvent = new EventEmitter<string>();
   @Output() searchUpdatedEvent = new EventEmitter<Array<{key: string, values: Array<string>}>>();
 
-  setFocusedEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  setFocusedEventEmitter = false;
 
   searchInput: string;
   private promptString: string = this.strings.prompt;
@@ -276,7 +281,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
   constructor(private differs: KeyValueDiffers) {
     this.differ = differs.find({}).create(null);
-    this.strings = {remove: 'Remove facet', cancel : 'Clear search', prompt: 'Select facets or enter text', 'text': 'Text'};
     this.searchInput = '';
   }
 
@@ -766,7 +770,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    * @memberOf NgxMagicSearchComponent
    */
   enableTextEntry(): void {
-    this.setFocusedEventEmitter.emit(true);
+    this.setFocusedEventEmitter = true;
     this.showMenu();
   };
 
@@ -795,7 +799,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     }, 0.1);
     this.strings.prompt = '';
     setTimeout(() => {
-      this.setFocusedEventEmitter.emit(true);
+      this.setFocusedEventEmitter = true;
     }, 0.1);
   }
 

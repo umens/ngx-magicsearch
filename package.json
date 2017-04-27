@@ -1,6 +1,6 @@
 {
   "name": "ngx-magicsearch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
   "scripts": {
     "build": "gulp build",
@@ -36,6 +36,7 @@
     "@angular/compiler": "^4.0.0",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@types/jasmine": "2.5.38",

@@ -1,17 +1,19 @@
-import { Directive, ElementRef, EventEmitter, Renderer, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Renderer, Input, OnInit, OnChanges } from '@angular/core';
 
 @Directive({
   selector: '[ngxFocus]'
 })
-export class NgxMagicSearchDirective implements OnInit {
+export class NgxMagicSearchDirective implements OnInit, OnChanges {
 
-  @Input() focusEvent: EventEmitter<boolean>;
+  @Input() focusEvent: boolean;
 
   constructor(private el: ElementRef, private renderer: Renderer) { }
 
-  ngOnInit() {
-    this.focusEvent.subscribe(event => {
+  ngOnInit() { }
+
+  ngOnChanges() {
+    if (this.focusEvent) {
       this.renderer.invokeElementMethod(this.el.nativeElement, 'focus', []);
-    });
+    }
   }
 }

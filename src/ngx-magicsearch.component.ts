@@ -269,7 +269,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   private facetsSave;
   facetSelected;
   filteredObj;
-  private filteredOptions;
+  filteredOptions;
   private facetOptions;
   private textSearch;
   isMenuOpen = false;
@@ -353,6 +353,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     }
     initialFacets.forEach(function (facet, idx) {
       let facetParts = facet.split('=');
+      facetParts[1] = facet.split('=').splice(1).join('=');
       that.facetsObj.forEach(function(value, idx_value: number) {
         if (value.name === facetParts[0]) {
           if (value.options === undefined) {
@@ -600,6 +601,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     let returnArray: Array<{key: string, values: Array<string>}> = [];
     this.currentSearch.forEach(function(item) {
       let explode = item.name.split('=');
+      explode[1] = item.name.split('=').splice(1).join('=');
       if (that.getIndexBy(returnArray, 'key', explode[0]) !== -1) {
         returnArray[that.getIndexBy(returnArray, 'key', explode[0])].values.push(explode[1]);
       } else {

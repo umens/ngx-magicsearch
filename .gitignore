@@ -183,6 +183,7 @@ dist/*
 ngx-magicsearch.js*
 ngx-magicsearch.d.ts
 src/**/*.js*
+!src/package.json
 src/**/*.map
 src/**/*.d.ts
 # Ngc generated files

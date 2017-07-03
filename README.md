@@ -31,12 +31,16 @@ You can install ngx-magicsearch by using npm.
 ```
 npm install ngx-magicsearch --save
 ```
-Add `NgxMagicSearchBarModule` to your module, eg.
+or 
+```
+yarn add ngx-magicsearch
+```
+Add `NgxMagicSearchModule` to your module, eg.
 ```javascript
-import { NgxMagicSearchBarModule } from 'ngx-magicsearch';
+import { NgxMagicSearchModule } from 'ngx-magicsearch';
 
 @NgModule({
-  imports: [ NgxMagicSearchBarModule ]
+  imports: [ NgxMagicSearchModule ]
   // ...
 })
 export class AppModule {

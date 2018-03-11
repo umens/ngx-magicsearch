@@ -921,7 +921,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     }
     // re-init to restore facets cleanly
     this.facetsObj = this.copyFacets(this.facetsSave);
-    this.currentSearch = [];
     this.initFacets();
   }
 

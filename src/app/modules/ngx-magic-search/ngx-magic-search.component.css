@@ -1,0 +1,184 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+.ngx-dropdown-menu {
+  z-index: 1000;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.ngx-dropdown-menu li:hover {
+  cursor: pointer;
+  background-color: #eaeaea;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid white;
+  margin-left: 5px;
+}
+
+.ngx-dropdown-menu>li>a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ngx-label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+
+/*-----------------------------------------
+  Colors
+  ----------------------------------------- */
+
+
+/*-----------------------------------------
+  Item list
+  ----------------------------------------- */
+
+@-moz-document url-prefix() {
+  .item-list .item {
+    top: -0.40rem;
+  }
+  .search-selected {
+    top: -0.40rem;
+  }
+}
+
+
+/*-----------------------------------------
+  Magic Search bar
+  ----------------------------------------- */
+
+.search-bar {
+  font-size: 14px;
+  position: relative;
+  border: 1px solid #ccc;
+  background-color: white;
+  height: auto;
+}
+
+.search-bar i.fa-filter {
+  color: #6a737b;
+  position: absolute;
+  top: 0.75rem;
+  left: 0.65rem;
+  font-size: 18px;
+}
+
+.search-bar .search-main-area {
+  position: relative;
+  margin-left: 2.75rem;
+  margin-right: 2.75rem;
+  cursor: text;
+  text-align: left;
+}
+
+.search-bar .item-list {
+  position: relative;
+  margin-top: 9px;
+  float: left;
+}
+
+.search-bar .item-list .item {
+  color: #333;
+  background-color: #e6e7e8;
+  margin-right: 0.5rem;
+  display: inline-block;
+  padding: 6px;
+  font-size: 0.80rem;
+}
+
+.search-bar .item-list .item a {
+  color: white;
+}
+
+.search-bar .item-list .item a.remove:hover {
+  cursor: pointer;
+}
+
+.search-bar .search-selected {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: white;
+  color: #444;
+}
+
+.search-bar .search-entry {
+  width: 18.5rem;
+}
+
+.search-bar .search-input {
+  width: 100%;
+  border: 0;
+  box-shadow: none;
+  margin: 6px 0;
+  background-color: white;
+  color: #444;
+  height: 28px;
+}
+
+.search-bar .search-input:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+.search-bar .match {
+  font-weight: bold;
+}
+
+.search-bar i.cancel {
+  color: #6a737b;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.65rem;
+  font-size: 18px;
+}
+
+.search-bar i.cancel:hover {
+  color: darkred;
+  cursor: pointer;
+}

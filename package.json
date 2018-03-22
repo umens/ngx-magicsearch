@@ -43,9 +43,9 @@
     "codecov": "cat coverage/lcov.info | codecov",
     "Cancel-postversion": "git push && git push --tags",
     "prepackagr": "rimraf dist coverage",
-    "postpackagr": "rimraf dist coverage",
+    "postpackagr": "rimraf coverage",
     "preversion": "npm run ci",
-    "deliver": "npm version minor -m \"Updating library to %s\" && npm run packagr && npm publish dist"
+    "deliver": "npm version minor -m \"Updating library to %s\" && npm run packagr && npm publish ./dist && rimraf dist"
   },
   "private": false,
   "dependencies": {},

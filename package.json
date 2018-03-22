@@ -18,7 +18,9 @@
     "angular2",
     "magicsearch",
     "faceted-search",
-    "typescript"
+    "typescript",
+    "angular5",
+    "angular4"
   ],
   "license": "MIT",
   "bugs": {

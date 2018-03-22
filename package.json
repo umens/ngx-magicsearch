@@ -1,6 +1,6 @@
 {
   "name": "ngx-magicsearch",
-  "version": "2.3.0",
+  "version": "2.1.1",
   "description": "Magic Search/Faceted Search Library for Angular 2.",
   "repository": {
     "type": "git",

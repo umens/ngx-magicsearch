@@ -1,1 +1,1 @@
-export * from './app/modules/ngx-magic-search/ngx-magic-search.module'
+export * from './app/modules/ngx-magic-search/ngx-magic-search.module';

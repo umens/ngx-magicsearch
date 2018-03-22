@@ -629,7 +629,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    *
    * @memberOf NgxMagicSearchComponent
    */
-  emitQuery(removed: any = undefined): void {
+  emitQuery(removed?: any | undefined): void {
     const that = this;
     let query = '';
     for (let i = 0; i < this.currentSearch.length; i++) {

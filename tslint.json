@@ -120,13 +120,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      ["ngx", "app"],
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      ["ngx", "app"],
       "kebab-case"
     ],
     "no-output-on-prefix": true,

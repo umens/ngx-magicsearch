@@ -435,11 +435,15 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { NgxMagicSearchComponent } from &#x27;./ngx-magic-search.component&#x27;;
 import { NgxMagicSearchDirective } from &#x27;../ngx-magic-search.directive&#x27;;
+import { MyRenderer } from &#x27;../renderer.service&#x27;;
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule
+  ],
+  providers: [
+    MyRenderer,
   ],
   declarations: [
     NgxMagicSearchComponent,

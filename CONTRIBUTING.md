@@ -20,12 +20,18 @@
 ```bash
 git clone https://github.com/umens/ngx-magicsearch.git
 cd ngx-magicsearch
-npm install   # or `npm run reinstall` if you get an error
-npm start     # start with --env dev
+npm install   # or `yarn install`
+npm start
 ```
 
 # Running tests
 
 ```bash
 npm test
+```
+
+# Reading the docs
+
+```bash
+npm run doc:buildandserve
 ```

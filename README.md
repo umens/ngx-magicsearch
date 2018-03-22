@@ -31,7 +31,7 @@ You can install ngx-magicsearch by using npm.
 ```
 npm install ngx-magicsearch --save
 ```
-or 
+or
 ```
 yarn add ngx-magicsearch
 ```

@@ -10,6 +10,7 @@
     "test.ts",
     "**/*.spec.ts",
     "app/app.*",
-    "environments/*"
+    "environments/*",
+    "app/modules/renderer.service.ts"
   ]
 }

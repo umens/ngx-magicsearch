@@ -4,13 +4,11 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NgxMagicSearchModule } from './modules/ngx-magic-search/ngx-magic-search.module';
-import { NgxMagicSearchDirective } from './modules/ngx-magic-search.directive';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NgxMagicSearchDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,

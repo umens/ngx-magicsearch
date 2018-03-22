@@ -3,247 +3,8 @@ import { DoCheck, KeyValueDiffers, OnChanges, HostListener,
 
 @Component({
   selector: 'ngx-magic-search',
-  template: `
-    <style>
-      /* Copyright 2014-2015 Eucalyptus Systems, Inc. */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        min-width: 160px;
-        z-index: 1;
-        margin-top: 4px;
-      }
-
-      .dropdown.active .dropdown-content {
-        display: block;
-      }
-
-      .ngx-dropdown-menu {
-        /* position: absolute; */
-        /* top: 100%; */
-        /* left: 0; */
-        z-index: 1000;
-        /* display: none; */
-        /* float: left; */
-        min-width: 160px;
-        padding: 5px 0;
-        margin: 0;
-        font-size: 14px;
-        text-align: left;
-        list-style: none;
-        background-color: #fff;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-        /* border: 1px solid #ccc; */
-        /* border: 1px solid rgba(0,0,0,.15); */
-        border-radius: 3px;
-        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-      }
-      .ngx-dropdown-menu li:hover {
-        cursor: pointer;
-        background-color: #eaeaea;
-      }
-
-      .arrow-up {
-        width: 0;
-        height: 0;
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-bottom: 7px solid white;
-        margin-left: 5px;
-      }
-
-      .ngx-dropdown-menu > li > a {
-        display: block;
-        padding: 3px 20px;
-        clear: both;
-        font-weight: 400;
-        line-height: 1.42857143;
-        color: #333;
-        white-space: nowrap;
-      }
-
-      .ngx-label {
-        display: inline;
-        padding: .2em .6em .3em;
-        font-size: 75%;
-        font-weight: 700;
-        line-height: 1;
-        color: #fff;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: baseline;
-        border-radius: .25em;
-      }
-
-      /*-----------------------------------------
-        Colors
-        ----------------------------------------- */
-      /*-----------------------------------------
-        Item list
-        ----------------------------------------- */
-      @-moz-document url-prefix() {
-        .item-list .item {
-          top: -0.40rem;
-        }
-
-        .search-selected {
-          top: -0.40rem;
-        }
-      }
-      /*-----------------------------------------
-        Magic Search bar
-        ----------------------------------------- */
-      .search-bar {
-        font-size: 14px;
-        position: relative;
-        border: 1px solid #ccc;
-        background-color: white;
-        /* padding: 0.5rem; */
-        height: auto;
-      }
-      .search-bar i.fa-filter {
-        color: #6a737b;
-        position: absolute;
-        top: 0.75rem;
-        left: 0.65rem;
-        font-size: 18px;
-      }
-      .search-bar .search-main-area {
-        position: relative;
-        margin-left: 2.75rem;
-        margin-right: 2.75rem;
-        cursor: text;
-        text-align: left;
-      }
-      .search-bar .item-list {
-        position: relative;
-        /*display: inline-block;*/
-        /*height: 20px;*/
-        margin-top: 9px;
-        float: left;
-      }
-      .search-bar .item-list .item {
-        color: #333;
-        background-color: #e6e7e8;
-        /* height: 30px; */
-        margin-right: 0.5rem;
-        display: inline-block;
-        padding: 6px;
-        font-size: 0.80rem;
-        /* font-size: 12px; */
-        /* margin-top: 8px; */
-      }
-      .search-bar .item-list .item a {
-        color: white;
-      }
-      .search-bar .item-list .item a.remove:hover {
-        cursor: pointer;
-      }
-      .search-bar .search-selected {
-        position: relative;
-        padding-left: 0;
-        padding-right: 0;
-        background-color: white;
-        color: #444;
-      }
-      .search-bar .search-entry {
-        width: 18.5rem;
-        /* height: 30px; */
-        /* position: relative; */
-        /* float: right; */
-        /* margin-bottom: 8px;*/
-      }
-      .search-bar .search-input {
-        width: 100%;
-        border: 0;
-        box-shadow: none;
-        /* margin-bottom: 0; */
-        margin: 6px 0;
-        background-color: white;
-        color: #444;
-        height: 28px;
-      }
-      .search-bar .search-input:focus {
-        box-shadow: none;
-        background-color: white;
-      }
-      .search-bar .match {
-        font-weight: bold;
-      }
-      .search-bar i.cancel {
-        color: #6a737b;
-        position: absolute;
-        top: 0.75rem;
-        right: 0.65rem;
-        font-size: 18px;
-      }
-      .search-bar i.cancel:hover {
-        color: darkred;
-        cursor: pointer;
-      }
-    </style>
-    <div class="magic-search">
-      <div class="search-bar">
-        <i class="fa fa-filter go"></i>
-        <div class="search-main-area" (click)="enableTextEntry()">
-          <span class="item-list" *ngIf="currentSearch">
-            <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item">
-              <span>{{ facet.label[0] }}:<b>{{ facet.label[1] }}</b></span>
-              <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
-            </span>
-          </span>
-          <span class="search-selected ngx-label" *ngIf="facetSelected">
-            {{ facetSelected.label[0] }}:
-          </span>
-          <!-- For bootstrap, the dropdown attribute is moved from input up to div. -->
-          <div [ngClass]="{'search-entry': true, 'dropdown': true, 'active': isMenuOpen}">
-            <input
-              class="search-input" type="text"
-              placeholder="{{ strings.prompt }}"
-              autocomplete="off"
-              (keyup)="handleKeyUp($event)"
-              (keydown)="handleKeyDown($event)"
-              (keypress)="handleKeyPress($event)"
-              [(ngModel)]="searchInput"
-              ngxFocus="setFocusedEventEmitter"
-            />
-            <div class="dropdown-content" *ngIf="filteredObj.length > 0">
-              <div class="arrow-up"></div>
-              <ul class="ngx-dropdown-menu">
-                <ng-template [ngIf]="!facetSelected">
-                  <li *ngFor="let facet of filteredObj; let i = index;">
-                    <a (click)="facetClicked(i, facet.name)" *ngIf="!isMatchLabel(facet.label)">{{ facet.label }}</a>
-                    <a (click)="facetClicked(i, facet.name)" *ngIf="isMatchLabel(facet.label)">
-                      {{ facet.label[0] }}<span class="match">{{ facet.label[1] }}</span>{{ facet.label[2] }}
-                    </a>
-                  </li>
-                </ng-template>
-                <ng-template [ngIf]="facetSelected">
-                  <li *ngFor="let option of filteredOptions; let i = index;">
-                    <a (click)="optionClicked(i, option.key)" *ngIf="!isMatchLabel(option.label)">
-                      {{ option.label }}
-                    </a>
-                    <a (click)="optionClicked(i, option.key)" *ngIf="isMatchLabel(option.label)">
-                      {{ option.label[0] }}<span class="match">{{ option.label[1] }}</span>{{ option.label[2] }}
-                    </a>
-                  </li>
-                </ng-template>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <a (click)="clearSearch()" *ngIf="currentSearch.length > 0" title="{{ strings.cancel }}">
-          <i class="fa fa-times cancel"></i>
-        </a>
-      </div>
-    </div>`
+  templateUrl: './ngx-magic-search.component.html',
+  styleUrls: ['./ngx-magic-search.component.css']
 })
 export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
@@ -280,7 +41,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   private hostEvent = null;
 
   constructor(private differs: KeyValueDiffers) {
-    this.differ = differs.find({}).create(null);
+    this.differ = differs.find({}).create();
     this.searchInput = '';
   }
 
@@ -293,7 +54,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   ngDoCheck() {
-    let changes = this.differ.diff(this.facets_param);
+    const changes = this.differ.diff(this.facets_param);
 
     if (changes) {
       this.initSearch();
@@ -309,7 +70,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   initSearch(): void {
     if (typeof this.facets_param === 'string') {
       // Parse facets JSON and convert to a list of facets.
-      let tmp = this.facets_param.replace(/__apos__/g, '\'').replace(/__dquote__/g, '\\"').replace(/__bslash__/g, '\\');
+      const tmp = this.facets_param.replace(/__apos__/g, '\'').replace(/__dquote__/g, '\\"').replace(/__bslash__/g, '\\');
       this.facetsObj = JSON.parse(tmp);
     } else {
       // Assume this is a usable javascript object
@@ -328,7 +89,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    * @memberOf NgxMagicSearchComponent
    */
   initFacets(): void {
-    let that = this;
+    const that = this;
     // set facets selected and remove them from facetsObj
     let initialFacets: string|Array<string> = (window.location.hash.split('?')[1] === undefined)
       ? '' : '?' + window.location.hash.split('?')[1];
@@ -352,7 +113,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       }, 0.1);
     }
     initialFacets.forEach(function (facet, idx) {
-      let facetParts = facet.split('=');
+      const facetParts = facet.split('=');
       facetParts[1] = facet.split('=').splice(1).join('=');
       that.facetsObj.forEach(function(value, idx_value: number) {
         if (value.name === facetParts[0]) {
@@ -383,12 +144,12 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    * add a facets javascript object to the existing list
    *
-   * @param {any} facets
+   * @param facets
    *
    * @memberOf NgxMagicSearchComponent
    */
   addFacets(facets): void {
-    let that = this;
+    const that = this;
     facets.forEach(function(facet) {
       that.facetsObj.append(facet);
     });
@@ -397,15 +158,15 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {any} facets
-   * @returns {*}
+   * @param facets
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
   copyFacets(facets): any {
-    let ret = [];
+    const ret = [];
     for (let i = 0; i < facets.length; i++) {
-      let facet = Object.create(facets[i]);
+      const facet = Object.create(facets[i]);
       if (facets[i].options !== undefined) {
         facet.options = [];
         for (let j = 0; j < facets[i].options.length; j++) {
@@ -420,19 +181,19 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {any} facetParts
+   * @param facetParts
    *
    * @memberOf NgxMagicSearchComponent
    */
   deleteFacetSelection(facetParts): void {
-    let that = this;
+    const that = this;
     this.facetsObj.slice().forEach(function (facet, idx) {
       if (facet.name === facetParts[0]) {
         if (facet.options === undefined) {
           return;  // allow free-form facets to remain
         }
         for (let i = 0; i < facet.options.length; i++) {
-          let option = facet.options[i];
+          const option = facet.options[i];
           if (option.key === facetParts[1]) {
             that.facetsObj[idx].options.splice(that.facetsObj[idx].options.indexOf(option), 1);
           }
@@ -447,12 +208,12 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    * remove entire facet
    *
-   * @param {any} facetParts
+   * @param facetParts
    *
    * @memberOf NgxMagicSearchComponent
    */
   deleteFacetEntirely(facetParts): void {
-    let that = this;
+    const that = this;
     this.facetsObj.slice().forEach(function (facet, idx) {
       if (facet.name === facetParts[0]) {
         that.facetsObj.splice(that.facetsObj.indexOf(facet), 1);
@@ -463,18 +224,18 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    * try filtering facets/options.. if no facets match, do text search
    *
-   * @param {string} searchVal
-   * @returns {void}
+   * @param searchVal
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
   filterFacets(searchVal: string): void {
     let i, idx, label;
-    let filtered = [];
+    const filtered = [];
     if (this.facetSelected === undefined) {
       this.filteredObj = this.facetsObj;
       for (i = 0; i < this.filteredObj.length; i++) {
-        let facet = this.filteredObj[i];
+        const facet = this.filteredObj[i];
         idx = facet.label.toLowerCase().indexOf(searchVal);
         if (idx > -1) {
           label = [
@@ -500,7 +261,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         return;
       }
       for (i = 0; i < this.filteredOptions.length; i++) {
-        let option = this.filteredOptions[i];
+        const option = this.filteredOptions[i];
         idx = option.label.toLowerCase().indexOf(searchVal);
         if (idx > -1) {
           label = [
@@ -523,8 +284,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {string} label
-   * @returns {boolean}
+   * @param label
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -574,7 +335,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {string} query
+   * @param query
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -592,15 +353,15 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @returns {Array<{key: string, values: Array<string>}>}
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
   buildTermsArray(): Array<{key: string, values: Array<string>}> {
-    let that = this;
-    let returnArray: Array<{key: string, values: Array<string>}> = [];
+    const that = this;
+    const returnArray: Array<{key: string, values: Array<string>}> = [];
     this.currentSearch.forEach(function(item) {
-      let explode = item.name.split('=');
+      const explode = item.name.split('=');
       explode[1] = item.name.split('=').splice(1).join('=');
       if (that.getIndexBy(returnArray, 'key', explode[0]) !== -1) {
         returnArray[that.getIndexBy(returnArray, 'key', explode[0])].values.push(explode[1]);
@@ -614,10 +375,10 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {Array<any>} array
-   * @param {string} key_name
-   * @param {(number|string)} value
-   * @returns {number}
+   * @param array
+   * @param key_name
+   * @param value
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -638,12 +399,12 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {*} event
+   * @param event
    *
    * @memberOf NgxMagicSearchComponent
    */
   handleKeyDown(event: any): void {
-    let key = event.keyCode || event.charCode;
+    const key = event.keyCode || event.charCode;
     if (key === 9) {  // prevent default when we can.
       event.preventDefault();
     }
@@ -652,8 +413,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {*} event
-   * @returns {void}
+   * @param event
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -662,8 +423,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (event.metaKey === true) {
       return;
     }
-    let searchVal = this.searchInput;
-    let key = event.keyCode || event.charCode;
+    const searchVal = this.searchInput;
+    const key = event.keyCode || event.charCode;
     if (key === 9) {  // tab, so select facet if narrowed down to 1
       if (this.facetSelected === undefined) {
         if (this.filteredObj.length !== 1) { return; }
@@ -694,7 +455,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (key === 13) {  // enter, so accept value
       // if tag search, treat as regular facet
       if (this.facetSelected && this.facetSelected.options === undefined) {
-        let curr = this.facetSelected;
+        const curr = this.facetSelected;
         curr.name = curr.name + '=' + searchVal;
         curr.label[1] = searchVal;
         this.currentSearch.push(curr);
@@ -732,15 +493,15 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {any} event
-   * @returns {void}
+   * @param event
+   * @returns
    *
    * @memberOf NgxMagicSearchComponent
    */
   handleKeyPress(event): void {
     // handle character input
     let searchVal = this.searchInput;
-    let key = event.which || event.keyCode || event.charCode;
+    const key = event.which || event.keyCode || event.charCode;
     if (key !== 8 && key !== 46 && key !== 13 && key !== 9 && key !== 27) {
       searchVal = searchVal + String.fromCharCode(key).toLowerCase();
     }
@@ -774,19 +535,19 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   enableTextEntry(): void {
     this.setFocusedEventEmitter = true;
     this.showMenu();
-  };
+  }
 
   /**
    * when facet clicked, add 1st part of facet and set up options
    *
-   * @param {number} index
-   * @param {string} name
+   * @param index
+   * @param name
    *
    * @memberOf NgxMagicSearchComponent
    */
   facetClicked(index: number, name: string): void {
     this.hideMenu();
-    let facet = this.filteredObj[index];
+    const facet = this.filteredObj[index];
     let label = facet.label;
     if (Array.isArray(label)) {
       label = label.join('');
@@ -808,13 +569,13 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    * when option clicked, complete facet and send event
    *
-   * @param {number} index
-   * @param {string} name
+   * @param index
+   * @param name
    *
    * @memberOf NgxMagicSearchComponent
    */
   optionClicked(index: number, name: string): void {
-    let curr = this.facetSelected;
+    const curr = this.facetSelected;
     curr.name = curr.name + '=' + name;
     curr.label[1] = this.filteredOptions[index].label;
     if (Array.isArray(curr.label[1])) {
@@ -831,8 +592,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    *
    *
-   * @param {string} category
-   * @param {string} option
+   * @param category
+   * @param option
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -844,13 +605,13 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.facetClicked(indexCategory, category);
       this.optionClicked(indexOption, option);
     }
-  };
+  }
 
   /**
    *
    *
-   * @param {string} category
-   * @param {string} option
+   * @param category
+   * @param option
    *
    * @memberOf NgxMagicSearchComponent
    */
@@ -859,17 +620,17 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     if (indexSearch !== -1) {
         this.removeFacet(indexSearch);
     }
-  };
+  }
 
   /**
    * send event with new query string
    *
-   * @param {*} removed
+   * @param removed
    *
    * @memberOf NgxMagicSearchComponent
    */
-  emitQuery(removed: any = undefined): void {
-    let that = this;
+  emitQuery(removed?: any | undefined): void {
+    const that = this;
     let query = '';
     for (let i = 0; i < this.currentSearch.length; i++) {
       if (this.currentSearch[i].name.indexOf('text') !== 0) {
@@ -885,8 +646,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.updateUrl(query);
       if (this.currentSearch.length > 0) {
         // prune facets as needed from menus
-        let newFacet = this.currentSearch[this.currentSearch.length - 1].name;
-        let facetParts = newFacet.split('=');
+        const newFacet = this.currentSearch[this.currentSearch.length - 1].name;
+        const facetParts = newFacet.split('=');
         this.facetsSave.forEach(function (facet, idx) {
           if (facet.name === facetParts[0]) {
             if (facet.singleton === true) {
@@ -903,12 +664,12 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   /**
    * remove facet and either update filter or search
    *
-   * @param {number} index
+   * @param index
    *
    * @memberOf NgxMagicSearchComponent
    */
   removeFacet(index: number): void {
-    let removed = this.currentSearch[index].name;
+    const removed = this.currentSearch[index].name;
     this.currentSearch.splice(index, 1);
     if (this.facetSelected === undefined) {
       this.emitQuery(removed);

@@ -15,6 +15,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     'text': 'Text'
   };
 
+  @Input('init_facets') init_facets: { [name: string]: string | string[] } = null;
   @Input('facets_param') facets_param: any = [];
   /*Array<{name: string, label: string, options: Array<{key: string, label: string}>}>|string*/
 
@@ -89,56 +90,23 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    * @memberOf NgxMagicSearchComponent
    */
   initFacets(): void {
-    const that = this;
-    // set facets selected and remove them from facetsObj
-    let initialFacets: string|Array<string> = (window.location.hash.split('?')[1] === undefined)
-      ? '' : '?' + window.location.hash.split('?')[1];
-    if (initialFacets.length < 1) {
-      for (let i = 0; i < this.currentSearch.length; i++) {
-        if (this.currentSearch[i].name.indexOf('text') !== 0) {
-          if (initialFacets.length > 0) { initialFacets = initialFacets + '&'; }
-          initialFacets = initialFacets + this.currentSearch[i].name;
-        }
-      }
-      this.facetsObj = this.copyFacets(this.facetsSave);
-      this.currentSearch = [];
-    }
-    if (initialFacets.indexOf('?') === 0) {
-      initialFacets = initialFacets.slice(1);
-    }
-    initialFacets = initialFacets.split('&');
-    if (initialFacets.length > 1 || initialFacets[0].length > 0) {
-      setTimeout(() => {
-        this.strings.prompt = '';
-      }, 0.1);
-    }
-    initialFacets.forEach(function (facet, idx) {
-      const facetParts = facet.split('=');
-      facetParts[1] = facet.split('=').splice(1).join('=');
-      that.facetsObj.forEach(function(value, idx_value: number) {
-        if (value.name === facetParts[0]) {
-          if (value.options === undefined) {
-            that.currentSearch.push({ 'name': facet, 'label': [value.label, facetParts[1]] });
-            // allow free-form facets to remain
-          } else {
-            value.options.forEach(function(option, idx_option) {
-              if (option.key === facetParts[1]) {
-                that.currentSearch.push({ 'name': facet, 'label': [value.label, option.label] });
-                if (value.singleton === true) {
-                  that.deleteFacetEntirely(facetParts);
-                } else {
-                  that.deleteFacetSelection(facetParts);
-                }
-              }
-            });
+    if (this.init_facets) {
+      this.facetsObj.forEach((facet) => {
+        let init_facet = this.init_facets[facet.name];
+        if (init_facet) {
+          if (!Array.isArray(init_facet)) {
+            init_facet = [init_facet];
           }
+
+          init_facet.forEach((facetValue) => {
+            this.currentSearch.push({ name: facet.name, label: [facet.label, facetValue]});
+          });
         }
       });
-    });
-    if (this.textSearch !== undefined) {
-      this.currentSearch.push({ 'name': 'text=' + this.textSearch, 'label': [this.strings.text, this.textSearch] });
     }
     this.filteredObj = this.facetsObj;
+
+    this.emitQuery();
   }
 
   /**
@@ -300,7 +268,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    * @memberOf NgxMagicSearchComponent
    */
   resetState(): void {
-    this.updateUrl('');
     this.searchInput = '';
     this.filteredObj = this.facetsObj;
     this.facetSelected = undefined;
@@ -330,24 +297,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
    */
   hideMenu(): void {
      this.isMenuOpen = false;
-  }
-
-  /**
-   *
-   *
-   * @param query
-   *
-   * @memberOf NgxMagicSearchComponent
-   */
-  updateUrl(query: string): void {
-    let url = window.location.href;
-    if (url.indexOf('?') > -1) {
-      url = url.split('?')[0];
-    }
-    if (query.length > 0) {
-      url = url + '?' + query;
-    }
-    window.history.pushState(query, '', url);
   }
 
   /**
@@ -643,7 +592,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.textSearch = undefined;
     } else {
       this.searchUpdatedEvent.emit(this.buildTermsArray());
-      this.updateUrl(query);
       if (this.currentSearch.length > 0) {
         // prune facets as needed from menus
         const newFacet = this.currentSearch[this.currentSearch.length - 1].name;

@@ -58,6 +58,14 @@ HTML
 Array<{name: string, label: string, options: Array<{key: string, label: string}>}>
 ```
 Array of your filters - *see [example](#Example) below*
+
+##### [init_facets] - *object*
+Initialize component with preselected facets
+```javascript
+{ [name: string]: string | string[] }
+```
+Array of your filters - *see [example](#Example) below*
+
 ##### [strings] - *object* - *optionnal*
 ```javascript
 {remove: string, cancel: string, prompt: string, text: string}

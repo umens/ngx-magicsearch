@@ -252,6 +252,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
           this.filteredObj = filtered;
         }, 0.1);
       } else {
+        this.filteredObj = [];
         this.textSearchEvent.emit(searchVal);
         this.hideMenu();
       }
@@ -277,6 +278,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         setTimeout(() => {
           this.filteredOptions = filtered;
         }, 0.1);
+      } else {
+        this.filteredObj = [];
       }
     }
   }
@@ -426,10 +429,23 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     const searchVal = this.searchInput;
     const key = event.keyCode || event.charCode;
     if (key === 9) {  // tab, so select facet if narrowed down to 1
-      if (this.facetSelected === undefined) {
+      if (this.facetSelected === undefined && this.filteredObj.length > 0) {
         this.facetClicked(0, this.filteredObj[0].name);
+      } else if (this.facetSelected === undefined && this.filteredObj.length === 0) {
+        // If there's nothing to select treat it as text search
+        for (let i = 0; i < this.currentSearch.length; i++) {
+          if (this.currentSearch[i].name.indexOf('text') === 0) {
+            this.currentSearch.splice(i, 1);
+          }
+        }
+        this.currentSearch.push({ 'name': 'text=' + searchVal, 'label': [this.strings.text, searchVal] });
+
+        this.hideMenu();
+        this.searchInput = '';
+        this.textSearchEvent.emit(searchVal);
+        this.textSearch = searchVal;
       } else {
-        if (this.filteredOptions === undefined) { return; }
+        if (this.filteredOptions === undefined || this.filteredOptions.length === 0) { return; }
         this.optionClicked(0, this.filteredOptions[0].key);
         this.resetState();
       }

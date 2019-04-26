@@ -450,6 +450,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         textFilter = '';
       }
       this.textSearchEvent.emit(searchVal);
+      this.unmarkAllFacets();
       return;
     }
     if (key === 13) {  // enter, so accept value

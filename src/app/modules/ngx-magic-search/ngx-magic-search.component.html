@@ -15,7 +15,7 @@
       <div [ngClass]="{'search-entry': true, 'dropdown': true, 'active': isMenuOpen}">
         <input class="search-input" type="text" placeholder="{{ strings.prompt }}" autocomplete="off" (keyup)="handleKeyUp($event)" (keydown)="handleKeyDown($event)" (keypress)="handleKeyPress($event)" [(ngModel)]="searchInput" ngxMagicSearch="setFocusedEventEmitter"
         />
-        <div class="dropdown-content" *ngIf="filteredObj.length > 0">
+        <div class="dropdown-content" *ngIf="!facetSelected || (filteredOptions && filteredOptions.length > 0)">
           <div class="arrow-up"></div>
           <ul class="ngx-dropdown-menu">
             <ng-template [ngIf]="!facetSelected">

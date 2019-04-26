@@ -236,7 +236,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.filteredObj = this.facetsObj;
       for (i = 0; i < this.filteredObj.length; i++) {
         const facet = this.filteredObj[i];
-        idx = facet.label.toLowerCase().indexOf(searchVal);
+        idx = facet.label.toLowerCase().indexOf(searchVal.toLowerCase());
         if (idx > -1) {
           label = [
             facet.label.substring(0, idx),
@@ -262,7 +262,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       }
       for (i = 0; i < this.filteredOptions.length; i++) {
         const option = this.filteredOptions[i];
-        idx = option.label.toLowerCase().indexOf(searchVal);
+        idx = option.label.toLowerCase().indexOf(searchVal.toLowerCase());
         if (idx > -1) {
           label = [
             option.label.substring(0, idx),

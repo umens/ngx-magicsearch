@@ -427,10 +427,9 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     const key = event.keyCode || event.charCode;
     if (key === 9) {  // tab, so select facet if narrowed down to 1
       if (this.facetSelected === undefined) {
-        if (this.filteredObj.length !== 1) { return; }
         this.facetClicked(0, this.filteredObj[0].name);
       } else {
-        if (this.filteredOptions === undefined || this.filteredOptions.length !== 1) { return; }
+        if (this.filteredOptions === undefined) { return; }
         this.optionClicked(0, this.filteredOptions[0].key);
         this.resetState();
       }

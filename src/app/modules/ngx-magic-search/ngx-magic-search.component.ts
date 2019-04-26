@@ -1,5 +1,6 @@
 import { DoCheck, KeyValueDiffers, OnChanges, HostListener,
-  Output, OnInit, Component, Input, EventEmitter } from '@angular/core';
+  Output, OnInit, Component, Input, EventEmitter, ViewChild } from '@angular/core';
+import { NgxMagicSearchDirective } from '../ngx-magic-search.directive';
 
 @Component({
   selector: 'ngx-magic-search',
@@ -20,6 +21,8 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
   @Output() textSearchEvent = new EventEmitter<string>();
   @Output() searchUpdatedEvent = new EventEmitter<Array<{key: string, values: Array<string>}>>();
+
+  @ViewChild(NgxMagicSearchDirective) searchDirective: NgxMagicSearchDirective;
 
   setFocusedEventEmitter = false;
 
@@ -488,6 +491,28 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
         this.filterFacets(searchVal);
       }
     }
+
+    // Remove facet on backspace
+    if (key === 8) {
+      if (this.currentSearch.length > 0) {
+        const rightmostFacetIndex = this.currentSearch.length - 1;
+
+        if (!this.currentSearch[rightmostFacetIndex].markedForDeletion) {
+          this.currentSearch[rightmostFacetIndex].markedForDeletion = true;
+        } else {
+          this.removeFacet(rightmostFacetIndex);
+        }
+      }
+    } else {
+      // If any key other than backspace is pressed we unmark all facets.
+      this.unmarkAllFacets();
+    }
+  }
+
+  unmarkAllFacets(): void {
+    for (const facet of this.currentSearch) {
+      facet.markedForDeletion = false;
+    }
   }
 
   /**
@@ -584,6 +609,9 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     this.currentSearch.push(curr);
     this.resetState();
     this.emitQuery();
+    if (this.searchDirective) {
+      this.searchDirective.focus();
+    }
     setTimeout(() => {
       this.hideMenu();
     }, 0.1);
@@ -708,6 +736,9 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   // tracked by the host.
   @HostListener('document:click', ['$event'])
     compareEvent( globalEvent ): void {
+      // Unmark all facets on document click.
+      this.unmarkAllFacets();
+
       // If the last known host event and the given global event are
       // the same reference, we know that the event originated within
       // the host (and then bubbled up out of the host and eventually

@@ -48,6 +48,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
 
   ngOnInit() {
     this.initSearch();
+    this.initFacets();
   }
 
   ngOnChanges() {
@@ -78,8 +79,7 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
       this.facetsObj = this.facets_param.slice(0);
     }
     this.facetsSave = this.copyFacets(this.facetsObj);
-    this.currentSearch = [];
-    this.initFacets();
+    this.currentSearch = this.currentSearch || [];
   }
 
 
@@ -92,21 +92,30 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
   initFacets(): void {
     if (this.init_facets) {
       this.facetsObj.forEach((facet) => {
-        let init_facet = this.init_facets[facet.name];
-        if (init_facet) {
-          if (!Array.isArray(init_facet)) {
-            init_facet = [init_facet];
-          }
+        if (facet.options && facet.options.length > 0) {
+          facet.options.forEach((option) => {
+            let init_facet = this.init_facets[facet.name];
 
-          init_facet.forEach((facetValue) => {
-            this.currentSearch.push({ name: facet.name, label: [facet.label, facetValue]});
+            if (!init_facet) {
+              return;
+            }
+
+            if (!Array.isArray(init_facet)) {
+              init_facet = [init_facet];
+            }
+
+            const optionIndex = init_facet.indexOf(option.key);
+
+            if (optionIndex >= 0) {
+              this.currentSearch.push({ name: `${facet.name}=${init_facet[optionIndex]}`, label: [facet.label, option.label] });
+            }
           });
         }
       });
+
+      this.searchUpdatedEvent.emit(this.buildTermsArray());
     }
     this.filteredObj = this.facetsObj;
-
-    this.emitQuery();
   }
 
   /**
@@ -630,7 +639,6 @@ export class NgxMagicSearchComponent implements OnInit, OnChanges, DoCheck {
     }
     // re-init to restore facets cleanly
     this.facetsObj = this.copyFacets(this.facetsSave);
-    this.initFacets();
   }
 
   /**

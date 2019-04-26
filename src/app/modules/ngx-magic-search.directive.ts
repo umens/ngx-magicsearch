@@ -12,7 +12,7 @@ export class NgxMagicSearchDirective implements OnChanges {
 
   ngOnChanges() {
     if (this.focusEvent) {
-      this.renderer.invokeElementMethod(this.el.nativeElement, 'focus');
+      this.renderer.invokeElementMethod(this.el, 'focus');
     }
   }
 }

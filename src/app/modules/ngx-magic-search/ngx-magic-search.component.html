@@ -3,7 +3,7 @@
     <i class="fa fa-filter go"></i>
     <div class="search-main-area" (click)="enableTextEntry()">
       <span class="item-list" *ngIf="currentSearch">
-        <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item">
+        <span *ngFor="let facet of currentSearch; let i = index;" class="ngx-label radius secondary item"  [class.marked]="facet.markedForDeletion">
           <span>{{ facet.label[0] }}:<b>{{ facet.label[1] }}</b></span>
       <a class="remove" (click)="removeFacet(i)" title="{{ strings.remove }}"><i class="fa fa-times"></i></a>
       </span>
